@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+*.swo
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.terraform/

@@ -45,7 +45,6 @@ resource "libvirt_volume" "master-resized" {
 
 locals {
   user_data = templatefile("${path.module}/cloud_init.tpl", {
-  #user_data = templatefile("${path.module}/cloud_init.cfg", {
           user             = var.user_name
           master_name      = var.master_name
           ssh_keys         = var.ssh_keys
@@ -57,13 +56,3 @@ resource "libvirt_cloudinit_disk" "commoninit-master" {
   name           = "commoninit-${var.master_name}.iso"
   user_data      = local.user_data
 }
-
-
-#data "template_file" "user_data" {
-#  template = file("${path.module}/cloud_init.tpl")
-#  vars = { 
-#          user      = var.user_name
-#          ssh_keys  = ["10.0.0.1", "10.0.0.2"]
-#          ssh_keys  = "${tolist([var.ssh_keys])}"
-#         }
-#}

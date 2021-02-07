@@ -30,8 +30,8 @@ variable "autostart" {
 
 
 variable "bridge_name" {
-  description = "assuming bridge, name of hosts bridge name to bind to"
-  default = ""
+  description = "assuming bridge as the preferred networking model for you VM, name of host's bridge to bind to"
+  default = "br0"
 }
 
 variable "qemu_image_path" {

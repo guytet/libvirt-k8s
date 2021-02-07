@@ -40,6 +40,7 @@ apt:
 
 
 packages:
+  - make
   - apt-transport-https
   - curl
   - gnupg2

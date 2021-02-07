@@ -53,3 +53,8 @@ user@node-0:/tmp$ kubectl get nodes
 NAME     STATUS   ROLES                  AGE     VERSION
 node-0   Ready    control-plane,master   9m47s   v1.20.2
 ```
+
+In order to bring back the cluster to its inital pre-configuration state, on the master node:
+```
+make clean
+```

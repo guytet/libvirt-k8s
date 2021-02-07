@@ -4,6 +4,11 @@ variable "names" {
   default = ["k8s-master", "node"]
 }
 
+variable "nodecount" {
+  default = 1
+}
+
+
 variable "user_name" {
   description =  "The default username on the linux VM"
   default = ""

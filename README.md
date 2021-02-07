@@ -17,6 +17,7 @@ terraform apply
 ```
 4. Copy the Makefile to the master node: `scp Makefile node-0:/tmp`
 ___
+<br>
 
 #### On the control/master node
 1. Login into the master node and run `make all`: `ssh node-0 ; cd /tmp ; make all `
@@ -27,6 +28,7 @@ ___
 kubeadm join 10.12.35.30:6443 --token fyujbk.508ijhay8hd0iwnu \
    --discovery-token-ca-cert-hash sha256:0b27474ce7eb985a211a85bfd4c50f0985b858c95d44951eacb0dade264a9626
 ```
+<br>
 
 #### On worker node(s)
 Copy the `kubeadm join` command from the previous step, login to to the workner nodes and run the command as root.

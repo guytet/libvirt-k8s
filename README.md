@@ -32,3 +32,12 @@ kubeadm join 10.12.35.30:6443 --token fyujbk.508ijhay8hd0iwnu \
 
 #### On worker node(s)
 Copy the `kubeadm join` command from the previous step, login to to the workner nodes and run the command as root.
+___
+
+<br>
+
+#### Back to the master, confirm cluster is ready for work:
+```
+kubectl cluster-info
+kubectl get nodes
+```

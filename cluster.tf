@@ -6,7 +6,7 @@ module k8s_cluster {
     "ssh-ed25519 ...AAAAC3NzaC1lZ... user@host ",
     "ssh-ed25519 ...AAAAC3NzaC1lZ... user@host"]
   ram = "2048"
-  vcpu = "4"
+  vcpu = "2"
   bridge_name =""
 
   # Optional:

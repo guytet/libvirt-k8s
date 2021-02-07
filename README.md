@@ -41,3 +41,15 @@ ___
 kubectl cluster-info
 kubectl get nodes
 ```
+```
+user@node-0:/tmp$ kubectl cluster-info 
+Kubernetes control plane is running at https://10.12.35.30:6443
+KubeDNS is running at https://10.12.35.30:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+```
+user@node-0:/tmp$ kubectl get nodes 
+NAME     STATUS   ROLES                  AGE     VERSION
+node-0   Ready    control-plane,master   9m47s   v1.20.2
+```

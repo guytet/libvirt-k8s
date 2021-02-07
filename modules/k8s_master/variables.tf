@@ -1,6 +1,7 @@
 
-variable "master_name" {
-  default = "k8s-master"
+variable "names" {
+  type = "list"
+  default = ["k8s-master", "node"]
 }
 
 variable "user_name" {
@@ -42,4 +43,8 @@ variable "qemu_image_path" {
 variable "pool_name" {
   description = "qemu storage pool name"
   default = "default"
+}
+
+variable "node_ram" {
+  default = "2048"
 }

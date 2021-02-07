@@ -1,11 +1,8 @@
 
-resource "libvirt_domain" "k8s_node" {
-    count     = var.nodecount
-    name  = "${element(var.instance_tags, count.index)}"
-
-    name      = var.master_name
-    memory    = var.ram
-    vcpu      = var.vcpu
+resource "libvirt_domain" "k8s_master" {
+    name   = var.master_name
+    memory = var.ram
+    vcpu   = var.vcpu
     autostart = var.autostart
     cloudinit = libvirt_cloudinit_disk.commoninit-master.id
 
@@ -31,14 +28,14 @@ resource "libvirt_domain" "k8s_node" {
 
 }
 
-resource "libvirt_volume" "base" {
+resource "libvirt_volume" "master-base" {
   name = "${var.master_name}.qcow2"
   pool = var.pool_name
   source = var.qemu_image_path
   format = "qcow2"
 }
 
-resource "libvirt_volume" "resized" {
+resource "libvirt_volume" "master-resized" {
   name           = "${var.master_name}-resized.qcow2"
   base_volume_id = libvirt_volume.master-base.id
   pool           = "default"

@@ -1,4 +1,4 @@
-main.tf
+site.tf
 *.pyc
 *.swp
 *.swo

@@ -54,7 +54,7 @@ runcmd:
   - apt-mark hold kubelet kubeadm kubectl
   - sysctl --system
   - modprobe br_netfilter
-  - hostnamectl set-hostname ${master_name}
+  - hostnamectl set-hostname ${node_name}
 
 
 power_state:

@@ -1,16 +1,11 @@
 
-variable "names" {
-  type = "list"
-  default = ["k8s-master", "node"]
-}
-
 variable "nodecount" {
-  default = 1
+  default = 2
 }
 
 
 variable "user_name" {
-  description =  "The default username on the linux VM"
+  description =  "The user to be created on the nodes"
   default = ""
 }
 
@@ -48,8 +43,4 @@ variable "qemu_image_path" {
 variable "pool_name" {
   description = "qemu storage pool name"
   default = "default"
-}
-
-variable "node_ram" {
-  default = "2048"
 }

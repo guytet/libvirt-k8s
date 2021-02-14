@@ -1,7 +1,7 @@
 ### libvirt-k8s
 #### On the hypervisor
 ##### Terrafom libvirt provider
-1. Obtain the correct terraform libvirt provider for you distro from [terraform-provider-libvirt](https://github.com/dmacvicar/terraform-provider-libvirt/releases)
+1. Obtain the correct terraform libvirt provider for your distro from [terraform-provider-libvirt](https://github.com/dmacvicar/terraform-provider-libvirt/releases)
 2. extract the contained file
 3. Move the file to its location: 
 ```

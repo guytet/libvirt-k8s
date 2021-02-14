@@ -31,7 +31,7 @@ kubeadm join 10.12.35.30:6443 --token fyujbk.508ijhay8hd0iwnu \
 <br>
 
 #### On worker node(s)
-Copy the `kubeadm join` command from the previous step, login to to the workner nodes and run the command as root.
+Copy the `kubeadm join` command from the previous step, login to to the worker nodes and run the command as root.
 ___
 
 <br>

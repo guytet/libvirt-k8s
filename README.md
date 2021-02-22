@@ -25,7 +25,7 @@ ___
 #### On the control/master node
 1. Login to the master node and run make all: 
 ```
-ssh node-0 ; cd /tmp ; make all 
+ssh node-0  "cd /tmp ; make all"
 ```
 
 2. Make note the of the `join` command at the end of `kubeadm join` output, which you'll need to run on all worker nodes:

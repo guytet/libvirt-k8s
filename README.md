@@ -15,7 +15,7 @@ mv terraform-provider-libvirt ~/.local/share/terraform/plugins/registry.terrafor
 terraform init
 terraform apply
 ```
-4. Copy the Makefile to the master node: `scp Makefile node-0:/tmp`
+3. Copy the Makefile to the master node: `scp Makefile node-0:/tmp`
 ___
 <br>
 

@@ -6,7 +6,7 @@
 3. Move the file to its location: 
 ```
 mkdir -p ~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.2/linux_amd64
-mv mv terraform-provider-libvirt ~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.2/linux_amd64
+mv terraform-provider-libvirt ~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.2/linux_amd64
 ```
 ##### Bring the cluster up
 1. Add your username and ssh key(s) to `cluster.tf`

@@ -15,16 +15,21 @@ mv terraform-provider-libvirt ~/.local/share/terraform/plugins/registry.terrafor
 terraform init
 terraform apply
 ```
-3. Copy the Makefile to the master node: `scp Makefile node-0:/tmp`
+3. Copy the Makefile to the master node: 
+```
+scp Makefile node-0:/tmp`
+```
 ___
 <br>
 
 #### On the control/master node
-1. Login to the master node and run `make all`: `ssh node-0 ; cd /tmp ; make all `
+1. Login to the master node and run make all: 
+```
+ssh node-0 ; cd /tmp ; make all 
+```
 
 2. Make note the of the `join` command at the end of `kubeadm join` output, which you'll need to run on all worker nodes:
 ```
-
 kubeadm join 10.12.35.30:6443 --token fyujbk.508ijhay8hd0iwnu \
    --discovery-token-ca-cert-hash sha256:0b27474ce7eb985a211a85bfd4c50f0985b858c95d44951eacb0dade264a9626
 ```

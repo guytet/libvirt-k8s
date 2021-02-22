@@ -17,7 +17,7 @@ terraform apply
 ```
 3. Copy the Makefile to the master node: 
 ```
-scp Makefile node-0:/tmp`
+scp Makefile node-0:/tmp
 ```
 ___
 <br>

@@ -63,3 +63,10 @@ In order to bring back the cluster to its inital pre-configuration state, on the
 ```
 make clean
 ```
+<br>
+
+#### Start an nginx service, while exposing externally (will be available from your LAN).
+By default, k8s deployments are only available from within the cluster network, `nginx.yml` contains the required configuration for starting a deployment and exposing it to the LAN - using a "Service". Change `externalIPs` to match the master node's LAN address, then:
+```
+kubectl apply -f nginx.yml
+```

@@ -1,6 +1,6 @@
 
 variable "nodecount" {
-  default = 2
+  default = 3
 }
 
 

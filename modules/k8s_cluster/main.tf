@@ -1,7 +1,7 @@
 
 resource "libvirt_domain" "k8s_node" {
     count     = var.nodecount
-    name      = "node-${count.index}"
+    name      = "k8s-${count.index}"
     memory    = var.ram
     vcpu      = var.vcpu
     autostart = var.autostart
@@ -53,7 +53,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   name           = "cloudinit-node-${count.index}.iso"
   user_data      = templatefile("${path.module}/cloud_init.tpl", {
           user             = var.user_name
-          node_name        = "node-${count.index}"
+          node_name        = "k8s-${count.index}"
           ssh_keys         = var.ssh_keys
   })
 }

@@ -56,10 +56,22 @@ systemctl restart containerd
 mkdir ~/.kube
 cp /etc/kubernetes/admin.conf /root/.kube/
 
-# Seems to do the job for installing calico CNI
-helm repo add projectcalico https://docs.projectcalico.org/charts
-helm install calico projectcalico/tigera-operator --version v3.20.2
+# calico CNI
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 # done, confirm:
 kubectl get nodes
 kubectl config view
+
+# test deployment
+kubectl apply -f ngnix.yml
+
+kubectl get svc my-nginx # note the port the service is forwarded to
+
+kubectl get pods -o wide my-nginx-5b56ccd65f-5bvkn # note the worker node the pod is running on
+
+curl worker0:30908 # then, curl the resulting address:
+
+# In our case, being  we're exposing the service with external IP's, the curl command would work from 
+# other clients on the LAN, with the master's IP in the curl command, e.g curl master0:8080
+

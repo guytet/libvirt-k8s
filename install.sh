@@ -56,8 +56,9 @@ systemctl restart containerd
 mkdir ~/.kube
 cp /etc/kubernetes/admin.conf /root/.kube/
 
-# CNI
-kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+# Seems to do the job for installing calico CNI
+helm repo add projectcalico https://docs.projectcalico.org/charts
+helm install calico projectcalico/tigera-operator --version v3.20.2
 
 # done, confirm:
 kubectl get nodes

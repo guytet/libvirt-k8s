@@ -1,6 +1,6 @@
 # See install.sh in this dir for the most up to date installation
 
-K8S_DIR=~/.kube
+K8S_DIR="~/.kube"
 
 # on buster only, containerd available by default on bullseye
 containerd:
@@ -62,12 +62,14 @@ helm:
 
 
 init_flannel:
-	sudo kubeadm init --pod-network-cidr=10.244.0.0/24
-	sudo cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
-	sudo chown -R ${USER}:${USER} ~/.kube
+	kubeadm init --pod-network-cidr=10.244.0.0/24
+	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
+	chown -R ${USER}:${USER} ~/.kube
 
 init:
-	sudo kubeadm init
+	kubeadm init
+	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
+	chown -R ${USER}:${USER} ~/.kube
 
 flannel:
 	kubectl apply -f \
@@ -79,5 +81,5 @@ calico:
 
 
 clean:
-	sudo kubeadm reset --force
+	kubeadm reset --force
 	rm -rf  ${K8S_DIR}

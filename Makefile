@@ -1,4 +1,4 @@
-
+# See install.sh in this dir for the most up to date installation
 all:  dir init calico completion
 
 K8S_DIR=~/.kube

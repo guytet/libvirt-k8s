@@ -1,6 +1,9 @@
 # See install.sh in this dir for the most up to date installation
 
 K8S_DIR="~/.kube"
+APISERVER_VIP=10.12.35.55
+MASTER0_IP:10.12.35.46
+MASTER1_IP:10.12.35.48
 
 # on buster only, containerd available by default on bullseye
 containerd:
@@ -78,6 +81,50 @@ flannel:
 
 calico:
 	kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+
+keepalived:
+	cat <<EOF> /etc/keepalived/check_apiserver.shx
+	#!/bin/sh
+	APISERVER_VIP=${API_SERVER_VIP}
+	APISERVER_DEST_PORT=6443
+	
+	errorExit() {
+	    echo "*** $*" 1>&2
+	    exit 1
+	}
+	
+	curl --silent --max-time 2 --insecure \
+	https://localhost:${APISERVER_DEST_PORT}/ -o /dev/null || \
+	errorExit "Error GET https://localhost:${APISERVER_DEST_PORT}/"
+	
+	if ip addr | grep -q ${APISERVER_VIP}; then
+	curl --silent --max-time 2 --insecure \
+	https://${APISERVER_VIP}:${APISERVER_DEST_PORT}/ -o /dev/null || \
+	errorExit "Error GET https://${APISERVER_VIP}:${APISERVER_DEST_PORT}/"
+	fi
+	EOF
+	
+	chmod +x /etc/keepalived/check_apiserver.sh
+
+haproxy:
+	cat <<EOF>> /etc/haproxy/haproxy.cfg
+	
+	frontend apiserver
+	    bind *:8443
+	    mode tcp
+	    option tcplog
+	    default_backend apiserver
+		
+	backend apiserver
+	    option httpchk GET /healthz
+	    http-check expect status 200
+	    mode tcp
+	    option ssl-hello-chk
+	    balance     roundrobin
+	        server master0 10.12.35.46:6443 check
+	        server master1 10.12.35.48:6443 check
+	EOF
 
 
 clean:

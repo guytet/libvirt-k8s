@@ -64,27 +64,43 @@ helm:
 	rm -f ./get_helm.sh
 
 
-init_flannel:
-	kubeadm init --pod-network-cidr=10.244.0.0/24
-	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
-	chown -R ${USER}:${USER} ~/.kube
-
-init:
-	kubeadm init
-	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
-	chown -R ${USER}:${USER} ~/.kube
-
-flannel:
-	kubectl apply -f \
-	https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
-
-
-calico:
-	kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-
 
 keepalived:
-	cat <<EOF> /etc/keepalived/check_apiserver.shx
+	apt -y install keepalived
+	
+	cat <<EOF> /etc/keepalived/keepalived.conf
+	! /etc/keepalived/keepalived.conf
+	! Configuration File for keepalived
+	global_defs {
+	    router_id LVS_DEVEL
+	}
+	vrrp_script check_apiserver {
+	  script "/etc/keepalived/check_apiserver.sh"
+	  interval 3
+	  weight -2
+	  fall 10
+	  rise 2
+	}
+	
+	vrrp_instance VI_1 {
+	    state MASTER
+	    interface enp0s3
+	    virtual_router_id 151
+	    priority 255
+	    authentication {
+	        auth_type PASS
+	        auth_pass P@##D321!
+	    }
+	    virtual_ipaddress {
+	        192.168.1.45/24
+	    }
+	    track_script {
+	        check_apiserver
+	    }
+	}
+	EOF
+	
+	cat <<EOF> /etc/keepalived/check_apiserver.sh
 	#!/bin/sh
 	APISERVER_VIP=${API_SERVER_VIP}
 	APISERVER_DEST_PORT=6443
@@ -108,6 +124,7 @@ keepalived:
 	chmod +x /etc/keepalived/check_apiserver.sh
 
 haproxy:
+	apt -y install haproxy
 	cat <<EOF>> /etc/haproxy/haproxy.cfg
 	
 	frontend apiserver
@@ -126,6 +143,24 @@ haproxy:
 	        server master1 10.12.35.48:6443 check
 	EOF
 
+
+init_flannel:
+	kubeadm init --pod-network-cidr=10.244.0.0/24
+	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
+	chown -R ${USER}:${USER} ~/.kube
+
+init:
+	kubeadm init
+	cp -i /etc/kubernetes/admin.conf ${K8S_DIR}/config
+	chown -R ${USER}:${USER} ~/.kube
+
+flannel:
+	kubectl apply -f \
+	https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
+
+
+calico:
+	kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 clean:
 	kubeadm reset --force

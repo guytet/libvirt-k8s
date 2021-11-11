@@ -1,3 +1,5 @@
+
+# https://www.linuxtechi.com/setup-highly-available-kubernetes-cluster-kubeadm/
 # See install.sh in this dir for the most up to date installation
 
 K8S_DIR="~/.kube"

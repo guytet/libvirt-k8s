@@ -34,4 +34,4 @@ spec:
   selector:
     run: my-nginx
   externalIPs:
-    - A.B.C.D
+    - 10.12.35.46

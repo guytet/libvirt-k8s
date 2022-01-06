@@ -1,0 +1,97 @@
+# actual mount dirs as noted in 
+# kind: PersistentVolume.spec.hostpath.path
+# need to be created on
+# each node beforehand, e.g:
+# for i in worker0 worker2; do ssh root@$i mkdir /mnt/data; done
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testing
+
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: generic-pv
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: testing
+  name: ngnix-pv-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: testing
+  name: my-nginx
+spec:
+  selector:
+    matchLabels:
+      run: my-nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: my-nginx
+    spec:
+      containers:
+      - name: my-nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: "/usr/share/nginx/html"
+            name: task-pv-storage
+      volumes:
+        - name: task-pv-storage
+          persistentVolumeClaim:
+            claimName: ngnix-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: testing
+  name: my-nginx
+  labels:
+    run: my-nginx
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    run: my-nginx
+  externalIPs:
+    - 10.12.35.46

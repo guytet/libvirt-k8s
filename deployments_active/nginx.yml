@@ -1,7 +1,5 @@
-# actual mount dirs as noted in 
-# kind: PersistentVolume.spec.hostpath.path
-# need to be created on
-# each node beforehand, e.g:
+# actual mount dirs as noted in # kind: PersistentVolume.spec.hostpath.path
+# need to be created on  each node beforehand, e.g:
 # for i in worker0 worker2; do ssh root@$i mkdir /mnt/data; done
 
 ---

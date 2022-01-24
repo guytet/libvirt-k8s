@@ -52,22 +52,6 @@ spec:
 
 
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: consul-2
-  labels:
-    type: local
-spec:
-  storageClassName: consul-storage
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
-
----
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
